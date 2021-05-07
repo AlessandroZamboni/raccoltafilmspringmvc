@@ -43,7 +43,10 @@ public class RegistaServiceImpl implements RegistaService {
 
 	@Transactional
 	public void rimuovi(Regista registaInstance) {
-		repository.delete(registaInstance);
+		if(!registaInstance.getFilms().isEmpty())
+			throw new RuntimeException("Non posso eliminare questo regista.");
+		else
+			repository.delete(registaInstance);
 	}
 
 	@Transactional(readOnly = true)

@@ -107,8 +107,12 @@ public class RegistaController {
 	@PostMapping("/delete/executedelete")
 	public String executeDeleteRegista(@ModelAttribute("delete_regista_attr") Regista regista,  RedirectAttributes redirectAttrs) {
 
-		registaService.rimuovi(registaService.caricaSingoloElementoConFilms(regista.getId()));
-
+		try {
+			registaService.rimuovi(registaService.caricaSingoloElementoConFilms(regista.getId()));
+		} catch (RuntimeException e) {
+			redirectAttrs.addFlashAttribute("errorMessage", "Non posso eliminare qusto regista.");
+			return "redirect:/regista";
+		}
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 
 		return "redirect:/regista";

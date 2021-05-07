@@ -9,7 +9,7 @@
     <title>Visualizza elemento</title>
 
     <!-- style per le pagine diverse dalla index -->
-    <link href="./assets/css/global.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath }/assets/css/global.css" rel="stylesheet">
 
 </head>
 <body>
@@ -69,15 +69,19 @@
 
         <div class='card-footer'>
             <form:form modelAttribute="delete_regista_attr" method="post" action="executedelete" novalidate="novalidate" >
+
                 <spring:bind path="id">
                     <input type="hidden" name="id" id="id" class="form-control ${status.error ? 'is-invalid' : ''}" value="${delete_regista_attr.id }" required>
                 </spring:bind>
 
-                <button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>
+                <button type="submit" name="submit" value="submit" id="submit" class="btn btn-danger btn-sm-primary">Elimina</button>
+                <a href="${pageContext.request.contextPath }/regista/" class='btn btn-outline-secondary' style='width:80px'>
+                    <i class='fa fa-chevron-left'></i> Back
+                </a>
+
             </form:form>
         </div>
     </div>
-
 
 
     <!-- end main container -->

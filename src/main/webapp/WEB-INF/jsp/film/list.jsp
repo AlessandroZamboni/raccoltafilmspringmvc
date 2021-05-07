@@ -65,8 +65,8 @@
 									<td>${filmItem.minutiDurata }</td>
 									<td>
 										<a class="btn  btn-sm btn-outline-secondary" href="${pageContext.request.contextPath }/film/show/${filmItem.id }">Visualizza</a>
-										<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="laservletpermodificare">Edit</a>
-										<a class="btn btn-outline-danger btn-sm" href="laservletperrimuovere">Delete</a>
+										<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath }/film/edit/${filmItem.id }">Edit</a>
+										<a class="btn btn-outline-danger btn-sm" href="${pageContext.request.contextPath }/film/delete/${filmItem.id }">Delete</a>
 									</td>
 								</tr>
 							</c:forEach>
