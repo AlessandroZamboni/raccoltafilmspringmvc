@@ -144,4 +144,15 @@ public class Regista {
 		this.films = films;
 	}
 
+	@Override
+	public String toString() {
+		return "Regista{" +
+				"id=" + id +
+				", nome='" + nome + '\'' +
+				", cognome='" + cognome + '\'' +
+				", nickName='" + nickName + '\'' +
+				", dataDiNascita=" + dataDiNascita +
+				", sesso=" + sesso +
+				'}';
+	}
 }

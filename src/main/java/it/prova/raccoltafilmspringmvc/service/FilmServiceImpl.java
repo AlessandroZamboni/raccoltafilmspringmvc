@@ -2,6 +2,8 @@ package it.prova.raccoltafilmspringmvc.service;
 
 import java.util.List;
 
+import it.prova.raccoltafilmspringmvc.model.Regista;
+import it.prova.raccoltafilmspringmvc.repository.regista.RegistaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +16,9 @@ public class FilmServiceImpl implements FilmService {
 
 	@Autowired
 	private FilmRepository repository;
+
+	@Autowired
+	private RegistaRepository registaRepository;
 
 	@Transactional(readOnly = true)
 	public List<Film> listAllElements() {

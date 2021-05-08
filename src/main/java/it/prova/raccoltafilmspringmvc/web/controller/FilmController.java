@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import it.prova.raccoltafilmspringmvc.model.Regista;
+import it.prova.raccoltafilmspringmvc.service.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.prova.raccoltafilmspringmvc.model.Film;
-import it.prova.raccoltafilmspringmvc.service.FilmService;
+
 import it.prova.raccoltafilmspringmvc.service.RegistaService;
 
 @Controller
@@ -51,9 +52,12 @@ public class FilmController {
 			RedirectAttributes redirectAttrs) {
 
 		// se il regista è valorizzato dobbiamo provare a caricarlo perché
-		// ci aiuta in pagina
+		// ci aiuta in pagina. Altrimenti devo fare rejectValue 'a mano' altrimenti
+		// comunque viene fatta una new durante il binding, anche se arriva stringa vuota
 		if (film.getRegista() != null && film.getRegista().getId() != null)
 			film.setRegista(registaService.caricaSingoloElemento(film.getRegista().getId()));
+		else
+			result.rejectValue("regista", "regista.notnull");
 
 		if (result.hasErrors()) {
 			return "film/insert";
@@ -94,7 +98,7 @@ public class FilmController {
 	@PostMapping("/delete/executedelete")
 	public String executeDeleteFilm(@ModelAttribute("delete_film_attr") Film filmInstance, RedirectAttributes redirectAttrs) {
 
-		filmService.rimuovi(filmService.caricaSingoloElementoEager(filmInstance.getId()));
+		filmService.rimuovi(filmInstance);
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 
@@ -112,15 +116,21 @@ public class FilmController {
 	public String saveEditFilm(@Valid @ModelAttribute("update_film_attr") Film filmInstance, BindingResult result,
 								  RedirectAttributes redirectAttrs) {
 
+		if (filmInstance.getRegista() != null && filmInstance.getRegista().getId() != null)
+			filmInstance.setRegista(registaService.caricaSingoloElemento(filmInstance.getRegista().getId()));
+		else
+			result.rejectValue("regista", "regista.notnull");
+
 		if (result.hasErrors()) {
-			return "regista/edit";
+			return "film/edit";
 		}
 
-		System.out.println("------------- DEBUG ----------"+filmInstance.getId());
+		System.out.println("######## DEBUG ############"+filmInstance);
+		System.out.println("######## DEBUG ############"+filmInstance.getRegista());
+
 		filmService.aggiorna(filmInstance);
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
-
 		return "redirect:/film";
 	}
 

@@ -91,12 +91,12 @@
 						<div class="form-row">
 							<div class="form-group col-md-6">
 								<label for="registaSearchInput">Regista:</label>
-								<spring:bind path="regista.id">
+								<spring:bind path="regista">
 									<input class="form-control ${status.error ? 'is-invalid' : ''}" type="text" id="registaSearchInput"
 										name="registaInput" value="${insert_film_attr.regista.nome}${empty insert_film_attr.regista.nome?'':' '}${insert_film_attr.regista.cognome}">
 								</spring:bind>
-								<input type="hidden" name="regista.id" id="registaId" value="${insert_film_attr.regista.id }">
-								<form:errors  path="regista.id" cssClass="error_field" />
+								<input type="hidden" name="regista" id="registaId" value="${insert_film_attr.regista.id }">
+								<form:errors  path="regista" cssClass="error_field" />
 							</div>
 						</div>
 						
